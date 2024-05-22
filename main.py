@@ -1,23 +1,32 @@
-# main chat program using Furhat
+# This is a chat program using Furhat empowered by chatgpt
+# Prerequisite
+# 1. pip install furhat_remote_api
+# 2. pip install openai
+# 3. Enable remote API on the furhat head
+# 4. copy and paste your openai api key in between the quotation marks in line 27
+# 5. run this command: python main.py
+# 6. Press Enter to continue
+# 7. Say "mission complete" to stop the program after running it
+# Notice: wait until the robot finishes the word, then press Enter to continue and talk
+
 
 import os
+from openai import OpenAI
 import openai
+
 from furhat_remote_api import FurhatRemoteAPI
 
 def query_chatgpt(prompt):
-    completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", 
-        messages=[{"role": "user", "content": prompt}]
-    )
+    completion = client.chat.completions.create(model="gpt-3.5-turbo", 
+    messages=[{"role": "user", "content": prompt}])
 
     return completion
 
-
 if __name__ == "__main__":
     # initialize the openai envvironment
-    os.environ["OPENAI_API_KEY"] = ""  # paste open api key here
-    # openai.organization = "HW Tech"
-    openai.api_key = os.getenv("OPENAI_API_KEY")
+
+    openai_api_key = ""
+    client = OpenAI(api_key=openai_api_key) # paste open api key here
 
     # Create an instance of the FurhatRemoteAPI class, providing the address of the robot or the SDK running the virtual robot
     # furhat = FurhatRemoteAPI("localhost")
@@ -43,7 +52,7 @@ if __name__ == "__main__":
             break
         if result.message == "":
             continue
-        
+
         print("I am saying:", result.message)
 
         PROMPT = result.message
