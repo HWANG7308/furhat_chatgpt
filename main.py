@@ -3,7 +3,7 @@
 # 1. pip install furhat_remote_api
 # 2. pip install openai
 # 3. Enable remote API on the furhat head
-# 4. copy and paste your openai api key in between the quotation marks in line 27
+# 4. copy and paste your openai api key in between the quotation marks in line 28
 # 5. run this command: python main.py
 # 6. Press Enter to continue
 # 7. Say "mission complete" to stop the program after running it
@@ -25,8 +25,8 @@ def query_chatgpt(prompt):
 if __name__ == "__main__":
     # initialize the openai envvironment
 
-    openai_api_key = ""
-    client = OpenAI(api_key=openai_api_key) # paste open api key here
+    openai_api_key = "" # paste open api key here
+    client = OpenAI(api_key=openai_api_key)
 
     # Create an instance of the FurhatRemoteAPI class, providing the address of the robot or the SDK running the virtual robot
     # furhat = FurhatRemoteAPI("localhost")
