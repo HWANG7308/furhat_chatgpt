@@ -17,7 +17,7 @@ import openai
 from furhat_remote_api import FurhatRemoteAPI
 
 def query_chatgpt(prompt):
-    completion = client.chat.completions.create(model="gpt-3.5-turbo", 
+    completion = client.chat.completions.create(model="gpt-3.5-turbo", # you can change the model to use here
     messages=[{"role": "user", "content": prompt}])
 
     return completion
