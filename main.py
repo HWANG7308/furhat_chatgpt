@@ -16,52 +16,65 @@ import openai
 
 from furhat_remote_api import FurhatRemoteAPI
 
-def query_chatgpt(prompt):
-    completion = client.chat.completions.create(model="gpt-3.5-turbo", # you can change the model to use here
-    messages=[{"role": "user", "content": prompt}])
+def query_chatgpt(context,prompt):
+    completion = client.chat.completions.create(
+        model="gpt-3.5-turbo", # you can change the model to use here
+        messages=[
+            {"role": "system", "content": context},
+            {"role": "user", "content": prompt}
+        ]
+    )
 
     return completion
 
 if __name__ == "__main__":
     # initialize the openai envvironment
-
-    openai_api_key = "" # paste open api key here
+    openai_api_key = open("./openai_api.txt").read() # paste open api key here
     client = OpenAI(api_key=openai_api_key)
+    CONTEXT = open("./context.txt").read() # put the path to the context file for setting the context of the agent
+    print(CONTEXT)
 
-    # Create an instance of the FurhatRemoteAPI class, providing the address of the robot or the SDK running the virtual robot
-    # furhat = FurhatRemoteAPI("localhost")
-    furhat = FurhatRemoteAPI("192.168.2.164")
+    # local text
+    PROMPT = "Tell me what the second step of building a drone is"
+    response = query_chatgpt(CONTEXT,PROMPT)
+    reply_chatgpt = response.choices[0].message.content
+    print("ChatGPT:", reply_chatgpt)
 
-    # Get the voices on the robot
-    voices = furhat.get_voices()
+    # # Talk to Furhat chatbot
+    # # Create an instance of the FurhatRemoteAPI class, providing the address of the robot or the SDK running the virtual robot
+    # # furhat = FurhatRemoteAPI("localhost")
+    # furhat = FurhatRemoteAPI("192.168.2.164")
 
-    # Set the voice of the robot
-    furhat.set_voice(name='Matthew')
+    # # Get the voices on the robot
+    # voices = furhat.get_voices()
 
-    # Say "Hi there!"
-    furhat.say(text="Hi there! I am your chatbot enhanced by ChatGPT. How can I help you? Please press Enter to continue.")
-    input("Press Enter to continue...")
-    # TODO: make a function that the loop will not repeat until furhat finishes its speech
+    # # Set the voice of the robot
+    # furhat.set_voice(name='Matthew')
 
-    # Start chat
-    while True:
-        print("Furhat is listening...")
-        result = furhat.listen()
-        if result.message == "mission complete":
-            furhat.say(text="See you next time!")
-            break
-        if result.message == "":
-            continue
+    # # Say "Hi there!"
+    # furhat.say(text="Hi there! I am your chatbot enhanced by ChatGPT. How can I help you? Please press Enter to continue.")
+    # input("Press Enter to continue...")
+    # # TODO: make a function that the loop will not repeat until furhat finishes its speech
 
-        print("I am saying:", result.message)
+    # # Start chat
+    # while True:
+    #     print("Furhat is listening...")
+    #     result = furhat.listen()
+    #     if result.message == "mission complete":
+    #         furhat.say(text="See you next time!")
+    #         break
+    #     if result.message == "":
+    #         continue
 
-        PROMPT = result.message
+    #     print("I am saying:", result.message)
 
-        response = query_chatgpt(PROMPT)
+    #     PROMPT = result.message
 
-        reply_chatgpt = response.choices[0].message.content
-        print("ChatGPT:", reply_chatgpt)
-        furhat.say(text=reply_chatgpt)
+    #     response = query_chatgpt(CONTEXT,PROMPT)
 
-        input("Press Enter to continue...")
-        # TODO: make a function that the loop will not repeat until furhat finishes its speech
+    #     reply_chatgpt = response.choices[0].message.content
+    #     print("ChatGPT:", reply_chatgpt)
+    #     furhat.say(text=reply_chatgpt)
+
+    #     input("Press Enter to continue...")
+    #     # TODO: make a function that the loop will not repeat until furhat finishes its speech
