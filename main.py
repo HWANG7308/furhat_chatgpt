@@ -34,47 +34,47 @@ if __name__ == "__main__":
     CONTEXT = open("./context.txt").read() # put the path to the context file for setting the context of the agent
     print(CONTEXT)
 
-    # local text
-    PROMPT = "Tell me what the second step of building a drone is"
-    response = query_chatgpt(CONTEXT,PROMPT)
-    reply_chatgpt = response.choices[0].message.content
-    print("ChatGPT:", reply_chatgpt)
+    # # local text
+    # PROMPT = "Tell me what the second step of building a drone is"
+    # response = query_chatgpt(CONTEXT,PROMPT)
+    # reply_chatgpt = response.choices[0].message.content
+    # print("ChatGPT:", reply_chatgpt)
 
-    # # Talk to Furhat chatbot
-    # # Create an instance of the FurhatRemoteAPI class, providing the address of the robot or the SDK running the virtual robot
-    # # furhat = FurhatRemoteAPI("localhost")
-    # furhat = FurhatRemoteAPI("192.168.2.164")
+    # Talk to Furhat chatbot
+    # Create an instance of the FurhatRemoteAPI class, providing the address of the robot or the SDK running the virtual robot
+    # furhat = FurhatRemoteAPI("localhost")
+    furhat = FurhatRemoteAPI("192.168.2.164")
 
-    # # Get the voices on the robot
-    # voices = furhat.get_voices()
+    # Get the voices on the robot
+    voices = furhat.get_voices()
 
-    # # Set the voice of the robot
-    # furhat.set_voice(name='Matthew')
+    # Set the voice of the robot
+    furhat.set_voice(name='Matthew')
 
-    # # Say "Hi there!"
-    # furhat.say(text="Hi there! I am your chatbot enhanced by ChatGPT. How can I help you? Please press Enter to continue.")
-    # input("Press Enter to continue...")
-    # # TODO: make a function that the loop will not repeat until furhat finishes its speech
+    # Say "Hi there!"
+    furhat.say(text="Hi there! I am your chatbot enhanced by ChatGPT. How can I help you? Please press Enter to continue.")
+    input("Press Enter to continue...")
+    # TODO: make a function that the loop will not repeat until furhat finishes its speech
 
-    # # Start chat
-    # while True:
-    #     print("Furhat is listening...")
-    #     result = furhat.listen()
-    #     if result.message == "mission complete":
-    #         furhat.say(text="See you next time!")
-    #         break
-    #     if result.message == "":
-    #         continue
+    # Start chat
+    while True:
+        print("Furhat is listening...")
+        result = furhat.listen()
+        if result.message == "mission complete":
+            furhat.say(text="See you next time!")
+            break
+        if result.message == "":
+            continue
 
-    #     print("I am saying:", result.message)
+        print("I am saying:", result.message)
 
-    #     PROMPT = result.message
+        PROMPT = result.message
 
-    #     response = query_chatgpt(CONTEXT,PROMPT)
+        response = query_chatgpt(CONTEXT,PROMPT)
 
-    #     reply_chatgpt = response.choices[0].message.content
-    #     print("ChatGPT:", reply_chatgpt)
-    #     furhat.say(text=reply_chatgpt)
+        reply_chatgpt = response.choices[0].message.content
+        print("ChatGPT:", reply_chatgpt)
+        furhat.say(text=reply_chatgpt)
 
-    #     input("Press Enter to continue...")
-    #     # TODO: make a function that the loop will not repeat until furhat finishes its speech
+        input("Press Enter to continue...")
+        # TODO: make a function that the loop will not repeat until furhat finishes its speech
